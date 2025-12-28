@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+##############################################################################
+# Author: Mastercore Sinapsys Global®
+# Copyright: 2019-Present.
+# License OPL-1 (Odoo Proprietary License v1.0)
+# See https://www.odoo.com/documentation/master/legal/licenses.html
+#
+###############################################################################
+-->
+<odoo>
+    <record id="crm_stage_tree_inherit_multi_team" model="ir.ui.view">
+        <field name="name">crm.stage.tree.inherit.multi.team</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="team_id" position="after">
+                <field name="team_ids" widget="many2many_tags"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="crm_stage_form_inherit_multi_team" model="ir.ui.view">
+        <field name="name">crm.stage.form.inherit.multi.team</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='team_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <field name="team_id" position="after">
+                <field
+                    name="team_ids"
+                    widget="many2many_tags"
+                    options="{'no_open': True, 'no_create': True}"
+                    invisible="team_count &gt;= 1"
+                    kanban_view_ref="%(sales_team.crm_team_view_kanban)s"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
